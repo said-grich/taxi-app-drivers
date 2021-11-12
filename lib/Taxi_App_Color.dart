@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TaxiAppColor {
 
   static const Color colorYellow = Color(0xFFFFC200);
-  static const Color colorPink = Color(0xFFFFC200);
+  static const Color colorPink = Color(0xffF4007D);
   static const Color colorWhiteBackground = Color(0xFFF9FCFF);
   static const Color colorDarkLight = Color(0xFF2A2530);
   static const Color colorDark = Color(0xFF1F1B24);

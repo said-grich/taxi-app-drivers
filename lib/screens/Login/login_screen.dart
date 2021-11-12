@@ -1,13 +1,12 @@
-import 'package:cabdriver/screens/companents/loginBody.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cabdriver/screens/Login/components/body.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-  static String id = "LoginScreen";
+  static const id= "LoginScreen";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LoginBody(),
+      body: Body(),
     );
   }
 }

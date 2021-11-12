@@ -12,6 +12,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Login/login_screen.dart';
 import 'MainPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final _auth = FirebaseAuth.instance;
-
 
 
   @override
@@ -80,47 +80,9 @@ class _SplashScreenState extends State<SplashScreen> {
                   SizedBox(
                     height: 200,
                   ),
-                  GestureDetector(
-                    onTap: () async{
-                      signInWithGoogle();
-                    },
-                    child: Container(
-                      height: 60,
-                      width: 290,
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black12,
-                                offset: Offset(0,3),
-                                blurRadius: 20
-                            )
-                          ]
-                      ),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              google,
-                              height: 30,
-                              width: 30,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: 20,),
-                            Text(
-                              "Sign In with Google",
-                              style: GoogleFonts.lato(
-                                  fontSize: 20,
-                                  color: Colors.white
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  singButton(text: "Login",onPress: ()=>{Navigator.pushNamed(context, LoginScreen.id)},),
+                  SizedBox(height: 15),
+                  singButton(text: "Sing In",onPress: ()=>{Navigator.pushNamed(context, HowItWorkPage.id)},),
                 ],
               ),
             ),
@@ -130,11 +92,11 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 10),
               // ignore: deprecated_member_use
-              child:  Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pushNamed(context, AboutUsPage.id);
                       },
                       child: Text(
@@ -152,8 +114,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                   ),
                   TextButton(
-                      onPressed: (){
-
+                      onPressed: () {
                         Navigator.pushNamed(context, HowItWorkPage.id);
                       },
                       child: Text(
@@ -172,66 +133,51 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+}
 
-  // Google SignIn
-  Future<UserCredential> signInWithGoogle() async {
+class singButton extends StatelessWidget {
+  final Function onPress;
+  final String text;
+  const singButton({
+    Key key, this.onPress, this.text,
+  }) : super(key: key);
 
-
-    final GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
-
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPress,
+      child: Container(
+        height: 60,
+        width: 290,
+        decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0, 3),
+                  blurRadius: 20
+              )
+            ]
+        ),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(width: 20,),
+              Center(
+                child: Text(
+                  text,
+                  style: GoogleFonts.lato(
+                      fontSize: 20,
+                      color: Colors.white
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
-
-    final UserCredential authResult = await _auth.signInWithCredential(credential);
-    final User user = authResult.user;
-
-    if (user != null) {
-      assert(!user.isAnonymous);
-      assert(await user.getIdToken() != null);
-
-      final User currentUser = _auth.currentUser;
-      assert(user.uid == currentUser.uid);
-
-      //addGoogleUserToDb(user);
-
-      print('signInWithGoogle succeeded: $user');
-
-      return authResult;
-    }
-
-    return null;
-  }
-
-  Future<void> addGoogleUserToDb(User currentuser) async {
-
-    await Firebase.initializeApp();
-
-    DatabaseReference databaseReference = FirebaseDatabase.instance.reference().child("driver_users/${currentuser.uid}");
-    Future<DataSnapshot> checkUser = FirebaseDatabase.instance.reference().child("driver_users/${currentuser.uid}").once();
-
-    Map userMap = {
-      'fullName': "grich",
-      'email': "test",
-      'photoProfile': "test",
-      'driver_id': "test",
-    };
-
-    // checkUser.then((snapShot){
-    //   if(snapShot.value == null){
-    //     databaseReference.set(userMap);
-    //     // after sign in with google go to HomePage
-    //   }else{
-    //     //Take the user to the Home Page if is Already in Database
-    //     Navigator.pushNamedAndRemoveUntil(context, MainPage.id, (route) => false);
-    //   }
-    // }
-    Navigator.pushNamedAndRemoveUntil(context, MainPage.id, (route) => false);
-
-
-
-
   }
 }

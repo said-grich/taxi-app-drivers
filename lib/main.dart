@@ -3,13 +3,12 @@ import 'package:cabdriver/screens/AboutUsPage.dart';
 import 'package:cabdriver/screens/AddPhoneNumPage.dart';
 import 'package:cabdriver/screens/ContactIsPage.dart';
 import 'package:cabdriver/screens/HowItWorksPage.dart';
-import 'package:cabdriver/screens/LoginScreen.dart';
+import 'package:cabdriver/screens/Login/login_screen.dart';
 import 'package:cabdriver/screens/MainPage.dart';
 import 'package:cabdriver/screens/SplashScreen.dart';
 import 'package:cabdriver/screens/MyTripsPage.dart';
 import 'package:cabdriver/screens/vehicleinfo.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -17,9 +16,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Theme/Theme.dart';
-import 'datamodels/driver.dart';
-import 'globalvariabels.dart';
-import 'helpers/helpermethods.dart';
 import 'package:flutter/services.dart';
 
 Future<void> main() async {
@@ -56,7 +52,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: themProvider.getTheme,
-        initialRoute: LoginScreen.id,
+        initialRoute: SplashScreen.id,
         // initialRoute: currentFirebaseUser.currentUser?.uid == null ? SplashScreen.id : MainPage.id,
         routes: {
           MainPage.id: (context) => MainPage(),

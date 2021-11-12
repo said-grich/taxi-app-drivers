@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "876702478370-vrn4h90sj8brj50ltqe8n4gkdo1i2hh8.apps.googleusercontent.com",
+          "client_id": "876702478370-789upsi9rs7fvt6hvqb9clkeh32cg6s5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.adnantjeexx.taxiappdrivers",
-            "certificate_hash": "77c33b2e10f6562703b63b984a66b004bfa2b13a"
+            "certificate_hash": "584c23ebc18ec8f56325b929105ea03095a3aae2"
           }
         },
         {
